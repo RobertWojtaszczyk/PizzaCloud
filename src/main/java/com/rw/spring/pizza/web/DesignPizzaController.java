@@ -1,6 +1,7 @@
 package com.rw.spring.pizza.web;
 
 import com.rw.spring.pizza.Ingredient;
+import com.rw.spring.pizza.Order;
 import com.rw.spring.pizza.Pizza;
 import com.rw.spring.pizza.data.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -8,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.rw.spring.pizza.Ingredient.Type;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +21,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Controller
 @RequestMapping("/design")
+@SessionAttributes("order")
+@ControllerAdvice
 public class DesignPizzaController {
     private final IngredientRepository ingredientRepo;
 
@@ -30,7 +31,25 @@ public class DesignPizzaController {
         this.ingredientRepo = ingredientRepo;
     }
 
-    @ModelAttribute
+    @ModelAttribute(name = "design")
+    public Pizza pizza(Model model) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepo.findAll().forEach(ingredients::add);
+
+        Type[] types = Ingredient.Type.values();
+        for (Type type : types) {
+            model.addAttribute(type.toString().toLowerCase(),
+                    filterByType(ingredients, type));
+        }
+        return new Pizza();
+    }
+
+    @ModelAttribute(name = "order")
+    public Order order() {
+        return new Order();
+    }
+
+    /*@ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "pszenna", Type.WRAP),
@@ -50,16 +69,26 @@ public class DesignPizzaController {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }
-    }
+    }*/
 
     @GetMapping
     public String showDesignForm(Model model) {
-        model.addAttribute("design", new Pizza());
+        //model.addAttribute("design", new Pizza());
+        /*List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepo.findAll().forEach(i -> ingredients.add(i));
+
+        Type[] types = Ingredient.Type.values();
+        for (Type type : types) {
+            model.addAttribute(type.toString().toLowerCase(),
+                    filterByType(ingredients, type));
+        }*/
+
         return "design";
     }
 
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute("design") Pizza design, Errors errors) {
+    public String processDesign(@Valid @ModelAttribute("design") Pizza design, Errors errors, @ModelAttribute Order order) {
+        log.info("Odebrano obiekt formularza: " + design);
         if (errors.hasErrors()) {
             return "design";
         }
