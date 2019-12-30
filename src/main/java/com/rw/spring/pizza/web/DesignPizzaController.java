@@ -2,7 +2,9 @@ package com.rw.spring.pizza.web;
 
 import com.rw.spring.pizza.Ingredient;
 import com.rw.spring.pizza.Pizza;
+import com.rw.spring.pizza.data.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -21,6 +23,12 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 public class DesignPizzaController {
+    private final IngredientRepository ingredientRepo;
+
+    @Autowired
+    public DesignPizzaController(IngredientRepository ingredientRepo) {
+        this.ingredientRepo = ingredientRepo;
+    }
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
