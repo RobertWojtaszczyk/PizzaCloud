@@ -4,6 +4,7 @@ import com.rw.spring.pizza.Ingredient;
 import com.rw.spring.pizza.Order;
 import com.rw.spring.pizza.Pizza;
 import com.rw.spring.pizza.data.IngredientRepository;
+import com.rw.spring.pizza.data.PizzaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +23,14 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
-@ControllerAdvice
 public class DesignPizzaController {
     private final IngredientRepository ingredientRepo;
+    private PizzaRepository pizzaRepo;
 
     @Autowired
-    public DesignPizzaController(IngredientRepository ingredientRepo) {
+    public DesignPizzaController(IngredientRepository ingredientRepo, PizzaRepository pizzaRepo) {
         this.ingredientRepo = ingredientRepo;
+        this.pizzaRepo = pizzaRepo;
     }
 
     @ModelAttribute(name = "design")
@@ -87,13 +89,20 @@ public class DesignPizzaController {
     }
 
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute("design") Pizza design, Errors errors, @ModelAttribute Order order) {
+    public String processDesign(@Valid @ModelAttribute("design") Pizza design,
+                                Errors errors, @ModelAttribute Order order) {
         log.info("Odebrano obiekt formularza: " + design);
         if (errors.hasErrors()) {
+            log.error("Design has some errors!" + errors.getAllErrors());
             return "design";
         }
 
         log.info("Przetwarzanie projektu pizza: " + design);
+
+        Pizza saved = pizzaRepo.save(design);
+        order.addDesign(saved);
+
+        log.info("Redirect to orders!");
         return "redirect:/orders/current";
     }
 

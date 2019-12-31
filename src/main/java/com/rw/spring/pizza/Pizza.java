@@ -21,5 +21,5 @@ public class Pizza {
     //@NotNull(message = "Lista nie może być pusta")
     //@Size(min = 2, message = "Musisz wybrać przynajmniej dwa składniki.")
     @NotEmpty(message = "Lista nie może być pusta")
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
 }
