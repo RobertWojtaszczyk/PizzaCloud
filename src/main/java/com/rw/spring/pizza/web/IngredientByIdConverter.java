@@ -1,10 +1,12 @@
 package com.rw.spring.pizza.web;
 
 import com.rw.spring.pizza.Ingredient;
-import com.rw.spring.pizza.data.IngredientRepository;
+import com.rw.spring.pizza.jpa.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
@@ -18,7 +20,9 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
     @Override
     public Ingredient convert(String id) {
-        return ingredientRepo.findById(id);
+        Optional<Ingredient> optionalIngredient = ingredientRepo.findById(id);
+        return optionalIngredient.orElse(null);
+        //return ingredientRepo.findById(id).get();
     }
 
 }

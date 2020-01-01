@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Slf4j
-@Repository
+//@Repository
 public class JdbcPizzaRepository implements PizzaRepository {
 
     private JdbcTemplate jdbc;

@@ -3,6 +3,7 @@ package com.rw.spring.pizza;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -12,8 +13,12 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name = "Pizza_Order")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date placedAt;
 
@@ -43,7 +48,13 @@ public class Order {
     @Digits(integer = 3, fraction = 0, message = "Nieprawidłowy kod CVV")
     private String ccCVV;
 
+    @ManyToMany(targetEntity = Pizza.class)
     private List<Pizza> pizzas = new ArrayList<>();
+
+    @PrePersist
+    void placedAt() {
+        this.placedAt = new Date();
+    }
 
     public void addDesign(Pizza design) {
         this.pizzas.add(design);
