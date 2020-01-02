@@ -51,6 +51,9 @@ public class Order {
     @ManyToMany(targetEntity = Pizza.class)
     private List<Pizza> pizzas = new ArrayList<>();
 
+    @ManyToOne
+    private User user;
+
     @PrePersist
     void placedAt() {
         this.placedAt = new Date();

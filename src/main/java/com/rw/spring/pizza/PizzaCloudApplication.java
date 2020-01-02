@@ -2,6 +2,7 @@ package com.rw.spring.pizza;
 
 import com.rw.spring.pizza.Ingredient.Type;
 import com.rw.spring.pizza.jpa.IngredientRepository;
+import com.rw.spring.pizza.jpa.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,7 @@ public class PizzaCloudApplication {
     }
 
     @Bean
-    public CommandLineRunner dataLoader(IngredientRepository repo) {
+    public CommandLineRunner dataLoader(IngredientRepository repo, UserRepository userRepository) {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
@@ -29,6 +30,16 @@ public class PizzaCloudApplication {
                 repo.save(new Ingredient("JACK", "Monterrey Jack", Type.CHEESE));
                 repo.save(new Ingredient("SLSA", "Salsa", Type.SAUCE));
                 repo.save(new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
+                userRepository.save(new User(
+                        "robert",
+                        "$2a$10$/lkpDjOpWGRg/n2TwVDM2.XDjji6syTV1373qQU33N/MQcbTTyNIe",
+                        "Robert W",
+                        "Leśna",
+                        "Ruda Śląska",
+                        "SL",
+                        "41-705",
+                        "555555555"
+                ));
             }
         };
     }
