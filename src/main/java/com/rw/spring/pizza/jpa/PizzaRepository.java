@@ -1,7 +1,7 @@
 package com.rw.spring.pizza.jpa;
 
 import com.rw.spring.pizza.Pizza;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface PizzaRepository extends CrudRepository<Pizza, Long> {
+public interface PizzaRepository extends PagingAndSortingRepository<Pizza, Long> {
 }
