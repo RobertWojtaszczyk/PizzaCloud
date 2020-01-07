@@ -23,12 +23,12 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
-public class DesignPizzaControllerPage {
+public class DesignPizzaController {
     private final IngredientRepository ingredientRepo;
     private PizzaRepository pizzaRepo;
 
     @Autowired
-    public DesignPizzaControllerPage(IngredientRepository ingredientRepo, PizzaRepository pizzaRepo) {
+    public DesignPizzaController(IngredientRepository ingredientRepo, PizzaRepository pizzaRepo) {
         this.ingredientRepo = ingredientRepo;
         this.pizzaRepo = pizzaRepo;
     }

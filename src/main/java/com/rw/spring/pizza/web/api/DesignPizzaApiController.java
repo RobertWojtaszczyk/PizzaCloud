@@ -15,10 +15,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/design", produces = "application/json")
 @CrossOrigin(origins = "*")
-public class DesignPizzaController {
+public class DesignPizzaApiController {
     private PizzaRepository pizzaRepository;
 
-    public DesignPizzaController(PizzaRepository pizzaRepository) {
+    public DesignPizzaApiController(PizzaRepository pizzaRepository) {
         this.pizzaRepository = pizzaRepository;
     }
 
@@ -34,7 +34,12 @@ public class DesignPizzaController {
         Optional<Pizza> optionalPizza = pizzaRepository.findById(id);
 
         return optionalPizza
-                .map(pizza -> new ResponseEntity<>(pizza, HttpStatus.OK))
-                .orElse( new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+                .map(pizza -> new ResponseEntity<>(pizza, HttpStatus.OK)).orElseGet(()->new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping(consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Pizza postPizza(@RequestBody Pizza pizza) {
+        return pizzaRepository.save(pizza);
     }
 }
