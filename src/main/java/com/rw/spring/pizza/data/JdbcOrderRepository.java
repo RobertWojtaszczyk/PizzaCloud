@@ -1,14 +1,12 @@
 package com.rw.spring.pizza.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rw.spring.pizza.Order;
-import com.rw.spring.pizza.Pizza;
+import com.rw.spring.pizza.domain.Order;
+import com.rw.spring.pizza.domain.Pizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;

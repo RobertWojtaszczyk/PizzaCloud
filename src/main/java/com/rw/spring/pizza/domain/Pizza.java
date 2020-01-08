@@ -1,5 +1,6 @@
-package com.rw.spring.pizza;
+package com.rw.spring.pizza.domain;
 
+import com.rw.spring.pizza.domain.Ingredient;
 import lombok.Data;
 
 import javax.persistence.*;

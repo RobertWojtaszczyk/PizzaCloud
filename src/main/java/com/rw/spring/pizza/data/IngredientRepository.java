@@ -1,6 +1,6 @@
 package com.rw.spring.pizza.data;
 
-import com.rw.spring.pizza.Ingredient;
+import com.rw.spring.pizza.domain.Ingredient;
 
 public interface IngredientRepository {
     Iterable<Ingredient> findAll();

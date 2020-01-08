@@ -1,6 +1,6 @@
 package com.rw.spring.pizza.web.api;
 
-import com.rw.spring.pizza.Pizza;
+import com.rw.spring.pizza.domain.Pizza;
 import com.rw.spring.pizza.jpa.PizzaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;

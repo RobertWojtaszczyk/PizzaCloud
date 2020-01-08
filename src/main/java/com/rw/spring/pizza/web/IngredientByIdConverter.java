@@ -1,6 +1,6 @@
 package com.rw.spring.pizza.web;
 
-import com.rw.spring.pizza.Ingredient;
+import com.rw.spring.pizza.domain.Ingredient;
 import com.rw.spring.pizza.jpa.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

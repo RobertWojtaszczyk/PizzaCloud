@@ -1,6 +1,6 @@
 package com.rw.spring.pizza.security;
 
-import com.rw.spring.pizza.User;
+import com.rw.spring.pizza.domain.User;
 import com.rw.spring.pizza.jpa.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

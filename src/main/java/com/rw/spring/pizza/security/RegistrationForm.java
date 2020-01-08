@@ -1,6 +1,6 @@
 package com.rw.spring.pizza.security;
 
-import com.rw.spring.pizza.User;
+import com.rw.spring.pizza.domain.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

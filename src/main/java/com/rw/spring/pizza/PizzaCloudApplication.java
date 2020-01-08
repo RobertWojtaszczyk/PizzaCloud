@@ -1,6 +1,8 @@
 package com.rw.spring.pizza;
 
-import com.rw.spring.pizza.Ingredient.Type;
+import com.rw.spring.pizza.domain.Ingredient;
+import com.rw.spring.pizza.domain.Ingredient.Type;
+import com.rw.spring.pizza.domain.User;
 import com.rw.spring.pizza.jpa.IngredientRepository;
 import com.rw.spring.pizza.jpa.UserRepository;
 import org.springframework.boot.CommandLineRunner;

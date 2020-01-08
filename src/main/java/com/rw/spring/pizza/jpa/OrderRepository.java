@@ -1,7 +1,6 @@
 package com.rw.spring.pizza.jpa;
 
-import com.rw.spring.pizza.Order;
-import org.springframework.data.jpa.repository.Query;
+import com.rw.spring.pizza.domain.Order;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;

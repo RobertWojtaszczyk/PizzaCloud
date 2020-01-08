@@ -1,8 +1,8 @@
 package com.rw.spring.pizza.web;
 
-import com.rw.spring.pizza.Ingredient;
-import com.rw.spring.pizza.Order;
-import com.rw.spring.pizza.Pizza;
+import com.rw.spring.pizza.domain.Ingredient;
+import com.rw.spring.pizza.domain.Order;
+import com.rw.spring.pizza.domain.Pizza;
 import com.rw.spring.pizza.jpa.IngredientRepository;
 import com.rw.spring.pizza.jpa.PizzaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import com.rw.spring.pizza.Ingredient.Type;
+import com.rw.spring.pizza.domain.Ingredient.Type;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

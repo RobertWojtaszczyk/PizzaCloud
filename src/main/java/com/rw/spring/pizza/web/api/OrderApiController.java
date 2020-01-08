@@ -1,13 +1,12 @@
 package com.rw.spring.pizza.web.api;
 
-import com.rw.spring.pizza.Order;
+import com.rw.spring.pizza.domain.Order;
 import com.rw.spring.pizza.jpa.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 @Slf4j

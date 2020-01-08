@@ -1,4 +1,4 @@
-package com.rw.spring.pizza;
+package com.rw.spring.pizza.domain;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;

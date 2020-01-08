@@ -1,7 +1,7 @@
 package com.rw.spring.pizza.data;
 
-import com.rw.spring.pizza.Ingredient;
-import com.rw.spring.pizza.Pizza;
+import com.rw.spring.pizza.domain.Ingredient;
+import com.rw.spring.pizza.domain.Pizza;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.sql.Types;
