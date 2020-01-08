@@ -2,6 +2,8 @@ package com.rw.spring.pizza.web.api;
 
 import com.rw.spring.pizza.domain.Order;
 import com.rw.spring.pizza.jpa.OrderRepository;
+import com.rw.spring.pizza.web.mapper.OrderMapper;
+import com.rw.spring.pizza.web.resource.output.OrderResourceOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +18,16 @@ import java.util.Optional;
 public class OrderApiController {
 
     private OrderRepository orderRepository;
+    private OrderMapper orderMapper;
 
-    public OrderApiController(OrderRepository orderRepository) {
+    public OrderApiController(OrderRepository orderRepository, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
+        this.orderMapper = orderMapper;
     }
 
     @GetMapping
-    public Iterable<Order> allOrders() {
-        return orderRepository.findAll();
+    public Iterable<OrderResourceOutput> allOrders() {
+        return orderMapper.asOutput(orderRepository.findAll());
     }
 
     @PostMapping(consumes = "application/json")

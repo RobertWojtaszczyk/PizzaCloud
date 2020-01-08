@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
-import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -23,7 +22,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderResourceInput {
 
-    private Long id;
     private Date placedAt;
 
     @NotBlank(message = "Imię i nazwisko jest obowiązkowe")
@@ -55,8 +53,4 @@ public class OrderResourceInput {
     private List<Pizza> pizzas = new ArrayList<>();
 
     private User user;
-
-    public void addDesign(Pizza design) {
-        this.pizzas.add(design);
-    }
 }

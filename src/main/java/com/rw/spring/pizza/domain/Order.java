@@ -1,6 +1,9 @@
 package com.rw.spring.pizza.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.persistence.*;
@@ -13,6 +16,9 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Pizza_Order")
 public class Order {
