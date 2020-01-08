@@ -12,11 +12,15 @@ import javax.validation.Validator;
 import java.util.Set;
 
 @Component
-@RequiredArgsConstructor
 public class PatchHelper {
 
     private ObjectMapper objectMapper;
     private final Validator validator;
+
+    public PatchHelper(ObjectMapper objectMapper, Validator validator) {
+        this.objectMapper = objectMapper;
+        this.validator = validator;
+    }
 
     public <T> T patch(JsonPatch patch, T targetBean, Class<T> beanClass) {
         JsonStructure target = objectMapper.convertValue(targetBean, JsonStructure.class);
