@@ -2,6 +2,7 @@ package com.rw.spring.pizza.domain;
 
 import com.rw.spring.pizza.domain.Ingredient;
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
+@RestResource(rel="pizzas", path="pizzas")
 public class Pizza {
 
     @Id
