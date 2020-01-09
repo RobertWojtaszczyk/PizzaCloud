@@ -25,6 +25,7 @@ public class OrderResourceInput {
     private Date placedAt;
 
     @NotBlank(message = "Imię i nazwisko jest obowiązkowe")
+    @Size(min = 3, message = "Minimalna długość to 3 znaki!")
     private String deliveryName;
 
     @NotBlank(message = "Ulica jest obowiązkowa")

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.JsonMergePatch;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Slf4j
@@ -38,20 +39,20 @@ public class OrderApiController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Order postOrder(@RequestBody OrderResourceInput order) {
-        return orderRepository.save(orderMapper.asOrder(order));
+    public OrderResourceOutput postOrder(@Valid @RequestBody OrderResourceInput order) {
+        return orderMapper.asOutput(orderRepository.save(orderMapper.asOrder(order)));
     }
 
     @PutMapping(path = "/{orderId}", consumes = "application/json")
-    public ResponseEntity<Order> putOrder(@PathVariable("orderId") Long orderId,
-                            @RequestBody Order order) { // co z orderId ???
-        return new ResponseEntity<>(orderRepository.save(order), HttpStatus.OK);
+    public ResponseEntity<OrderResourceOutput> putOrder(@PathVariable("orderId") Long orderId,
+                            @Valid @RequestBody OrderResourceInput order) {
+        return new ResponseEntity<>(orderMapper.asOutput(orderRepository.save(orderMapper.asOrder(order, orderId))), HttpStatus.OK);
     }
 
     @PatchMapping(path = "/{orderId}", consumes = "application/merge-patch+json")
     public ResponseEntity<OrderResourceOutput> patchOrder(@PathVariable("orderId") Long orderId,
                             @RequestBody JsonMergePatch mergePatchDocument) {
-        log.info("Processing orderId: " + orderId + " with update: " + mergePatchDocument);
+        log.info("Processing orderId: " + orderId);
 
         Order order = orderRepository.findById(orderId).orElseThrow(ResourceNotFoundException::new);;
         log.info("Original order: " + order);
@@ -66,8 +67,8 @@ public class OrderApiController {
     }
 
     @PatchMapping(path = "/{orderId}", consumes = "application/json")
-    public ResponseEntity<Order> patchOrder(@PathVariable("orderId") Long orderId,
-                            @RequestBody Order patch) {
+    public ResponseEntity<OrderResourceOutput> patchOrder(@PathVariable("orderId") Long orderId,
+                            @Valid @RequestBody OrderResourceInput patch) {
 
         log.info("Processing orderId: " + orderId + " with update: " + patch);
 
@@ -78,8 +79,8 @@ public class OrderApiController {
         } else log.info("Order: " + orderId + " not found!");
 
         return order
-                .map(ord -> updateOrder(ord, patch))
-                .map(ord -> new ResponseEntity<>(ord, HttpStatus.OK))
+                .map(ord -> updateOrder(ord, orderMapper.asOrder(patch)))
+                .map(ord -> new ResponseEntity<>(orderMapper.asOutput(ord), HttpStatus.OK))
                 .orElseGet(()->new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 

@@ -29,6 +29,23 @@ public class OrderMapper {
                 .build();
     }
 
+    public Order asOrder(OrderResourceInput resourceInput, Long orderId) {
+        return Order.builder()
+                .id(orderId)
+                .placedAt(resourceInput.getPlacedAt())
+                .deliveryName(resourceInput.getDeliveryName())
+                .deliveryStreet(resourceInput.getDeliveryStreet())
+                .deliveryCity(resourceInput.getDeliveryCity())
+                .deliveryState(resourceInput.getDeliveryState())
+                .deliveryZip(resourceInput.getDeliveryZip())
+                .ccNumber(resourceInput.getCcNumber())
+                .ccExpiration(resourceInput.getCcExpiration())
+                .ccCVV(resourceInput.getCcCVV())
+                .pizzas(resourceInput.getPizzas())
+                .user(resourceInput.getUser())
+                .build();
+    }
+
     public OrderResourceInput asInput(Order order) {
         return OrderResourceInput.builder()
                 .placedAt(order.getPlacedAt())
