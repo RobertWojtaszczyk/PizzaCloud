@@ -8,6 +8,7 @@ import com.rw.spring.pizza.web.resource.input.OrderResourceInput;
 import com.rw.spring.pizza.web.resource.output.OrderResourceOutput;
 import com.rw.spring.pizza.web.util.PatchHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -82,6 +83,19 @@ public class OrderApiController {
                 .map(ord -> updateOrder(ord, orderMapper.asOrder(patch)))
                 .map(ord -> new ResponseEntity<>(orderMapper.asOutput(ord), HttpStatus.OK))
                 .orElseGet(()->new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/{orderId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteOrder(@PathVariable("orderId") Long orderId) {
+        try {
+            log.info("Deleting orderId: " + orderId);
+            orderRepository.deleteById(orderId);
+            //return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        } catch (EmptyResultDataAccessException e) {
+            log.info("Can not delete! " + e.getMessage());
+            //return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     private Order updateOrder(Order order, Order update) {
