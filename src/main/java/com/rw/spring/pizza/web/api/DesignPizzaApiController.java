@@ -3,6 +3,8 @@ package com.rw.spring.pizza.web.api;
 import com.rw.spring.pizza.domain.Pizza;
 import com.rw.spring.pizza.jpa.PizzaRepository;
 import com.rw.spring.pizza.web.DesignPizzaController;
+import com.rw.spring.pizza.web.resource.hateoas.PizzaRepresentation;
+import com.rw.spring.pizza.web.resource.hateoas.PizzaRepresentationAssembler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -32,12 +34,11 @@ public class DesignPizzaApiController {
     }
 
     @GetMapping("/recent")
-    public CollectionModel<EntityModel<Pizza>> recentPizzas() {
+    public CollectionModel<PizzaRepresentation> recentPizzas() {
         PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
 
         List<Pizza> pizzas = pizzaRepository.findAll(page).getContent();
-        CollectionModel<EntityModel<Pizza>> recentPizzas = wrap(pizzas);
-
+        CollectionModel<PizzaRepresentation> recentPizzas = new PizzaRepresentationAssembler().toCollectionModel(pizzas);
         recentPizzas.add(WebMvcLinkBuilder
                 .linkTo(WebMvcLinkBuilder.methodOn(DesignPizzaApiController.class).recentPizzas())
                 .withRel("recents"));
