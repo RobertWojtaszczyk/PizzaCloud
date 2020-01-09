@@ -2,14 +2,23 @@ package com.rw.spring.pizza.web.api;
 
 import com.rw.spring.pizza.domain.Pizza;
 import com.rw.spring.pizza.jpa.PizzaRepository;
+import com.rw.spring.pizza.web.DesignPizzaController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.hateoas.CollectionModel.wrap;
 
 @Slf4j
 @RestController
@@ -23,9 +32,17 @@ public class DesignPizzaApiController {
     }
 
     @GetMapping("/recent")
-    public Iterable<Pizza> recentPizzas() {
+    public CollectionModel<EntityModel<Pizza>> recentPizzas() {
         PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
-        return pizzaRepository.findAll(page).getContent();
+
+        List<Pizza> pizzas = pizzaRepository.findAll(page).getContent();
+        CollectionModel<EntityModel<Pizza>> recentPizzas = wrap(pizzas);
+
+        recentPizzas.add(WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(DesignPizzaApiController.class).recentPizzas())
+                .withRel("recents"));
+
+        return recentPizzas;
     }
 
     @GetMapping("{id}")
